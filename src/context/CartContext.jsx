@@ -152,11 +152,19 @@ export function CartProvider({ children }) {
     const savedCart = localStorage.getItem('cart');
     return savedCart ? JSON.parse(savedCart) : [];
   });
+  
+  const [lastViewed, setLastViewed] = useState(() => {
+    const saved = localStorage.getItem('lastViewed');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
+  useEffect(() => {
+    localStorage.setItem('lastViewed', JSON.stringify(lastViewed));
+  }, [lastViewed]);
   // ✅ Fix: Prevent Double Toast
   const addToCart = (product) => {
     const existingItem = cart.find(item => item.id === product.id);
@@ -180,11 +188,25 @@ export function CartProvider({ children }) {
     toast.success(`Item removed from cart`);
   };
 
+  const addToLastViewed = (product) => {
+    setLastViewed(prev => {
+      const filtered = prev.filter(item => item.id !== product.id);
+      return [product, ...filtered].slice(0, 10);
+    });
+  };
+
+  const clearCart = () => {
+    setCart([]);
+    toast.success('Cart cleared successfully!');
+  };
   return (
     <CartContext.Provider value={{
       cart,
+      lastViewed,
       addToCart,
-      removeFromCart
+      removeFromCart,
+      addToLastViewed,
+      clearCart
     }}>
       {children}
     </CartContext.Provider>

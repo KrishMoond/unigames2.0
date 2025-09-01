@@ -1,1005 +1,303 @@
-// // // // // import { useState } from 'react';
-// // // // // import { useCart } from '../context/CartContext';
-// // // // // import toast from 'react-hot-toast';
-
-// // // // // const GAMES = [
-// // // // //   { id: 1, title: 'MINECRAFT', price: 59.99, image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// // // // //   { id: 2, title: 'GTA V', price: 49.99, image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// // // // //   { id: 3, title: 'SPIDER MAN', price: 39.99, image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' },
-// // // // //   { id: 4, title: 'THE LAST OF US', price: 44.99, image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-// // // // //   { id: 5, title: 'GOD OF WAR', price: 44.99, image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-// // // // //   { id: 6, title: 'HORIZON', price: 44.99, image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-// // // // //   { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-// // // // //   { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-// // // // //   { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-// // // // //   { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-// // // // //   { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-// // // // //   { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-// // // // //   { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-// // // // //   { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-// // // // //   { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-// // // // //   { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-// // // // //     { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg'
-// // // // //   },
-// // // // //   { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg'
-// // // // //   },
-   
-// // // // //   { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-// // // // //   { id: 20, title: 'Froza Horizon 5', price: 44.99, image:  'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg'}
-
-// // // // // ];
-
-// // // // // export default function Home() {
-// // // // //   const { addToCart, addToLastViewed } = useCart();
-// // // // //   const [searchTerm, setSearchTerm] = useState('');
-
-// // // // //   const filteredGames = GAMES.filter(game =>
-// // // // //     game.title.toLowerCase().includes(searchTerm.toLowerCase())
-// // // // //   );
-
-// // // // //   const handleGameClick = (game) => {
-// // // // //     addToLastViewed(game);
-// // // // //   };
-
-// // // // //   const handleAddToCart = (game) => {
-// // // // //     addToCart(game);
-// // // // //     toast.success(`${game.title} added to cart!`);
-// // // // //   };
-
-// // // // //   return (
-// // // // //     <div>
-// // // // //       <div className="mb-8">
-// // // // //         <input
-// // // // //           type="text"
-// // // // //           placeholder="Search games..."
-// // // // //           className="w-full p-2 border rounded"
-// // // // //           value={searchTerm}
-// // // // //           onChange={(e) => setSearchTerm(e.target.value)}
-// // // // //         />
-// // // // //       </div>
-
-// // // // //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-// // // // //         {filteredGames.map(game => (
-// // // // //           <div
-// // // // //             key={game.id}
-// // // // //             className="border rounded-lg overflow-hidden shadow-lg transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer"
-// // // // //           >
-// // // // //             <img
-// // // // //               src={game.image}
-// // // // //               alt={game.title}
-// // // // //               className="w-full h-48 object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-// // // // //               onClick={() => handleGameClick(game)}
-// // // // //             />
-// // // // //             <div className="p-4">
-// // // // //               <h3 className="text-xl font-semibold mb-2">{game.title}</h3>
-// // // // //               <p className="text-gray-600 mb-4">Rs.{game.price}</p>
-// // // // //               <button
-// // // // //                 onClick={() => handleAddToCart(game)}
-// // // // //                 className="w-full bg-blue-600 text-white py-2 rounded transition-transform duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
-// // // // //               >
-// // // // //                 Add to Cart
-// // // // //               </button>
-// // // // //             </div>
-// // // // //           </div>
-// // // // //         ))}
-// // // // //       </div>
-// // // // //     </div>
-// // // // //   );
-// // // // // }
-
-
- 
-// // // // import { useState } from 'react';
-// // // // import { useCart } from '../context/CartContext';
-// // // // import toast from 'react-hot-toast';
-
-// // // // const GAMES = [
-// // // //   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// // // //   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// // // //   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' },
-// // // //   { id: 4, title: 'THE LAST OF US', price: 44.99, category: 'Horror', image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-// // // //   { id: 5, title: 'GOD OF WAR', price: 44.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-// // // //   { id: 6, title: 'HORIZON', price: 44.99, category: 'Adventure', image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-// // // //   { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-// // // //   { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-// // // //   { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-// // // //   { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-// // // //   { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-// // // //   { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-// // // //   { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-// // // //   { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-// // // //   { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-// // // //   { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-// // // //   { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg' },
-// // // //   { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg' },
-// // // //   { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-// // // //   { id: 20, title: 'Froza Horizon 5', price: 44.99, image: 'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg' }
-// // // // ];
-
-// // // // export default function Home() {
-// // // //   const { addToCart, addToLastViewed } = useCart();
-// // // //   const [searchTerm, setSearchTerm] = useState('');
-// // // //   const [selectedCategory, setSelectedCategory] = useState('All');
-// // // //   const [sortBy, setSortBy] = useState('priceAsc');
-
-// // // //   const filteredGames = GAMES.filter(game =>
-// // // //     (game.title.toLowerCase().includes(searchTerm.toLowerCase()) || game.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
-// // // //     (selectedCategory === 'All' || game.category === selectedCategory)
-// // // //   );
-
-// // // //   const sortedGames = [...filteredGames].sort((a, b) => {
-// // // //     if (sortBy === 'priceAsc') return a.price - b.price;
-// // // //     if (sortBy === 'priceDesc') return b.price - a.price;
-// // // //     return 0;
-// // // //   });
-
-// // // //   const handleGameClick = (game) => {
-// // // //     addToLastViewed(game);
-// // // //   };
-
-// // // //   const handleAddToCart = (game) => {
-// // // //     addToCart(game);
-// // // //     toast.success(`${game.title} added to cart!`);
-// // // //   };
-
-// // // //   return (
-// // // //     <div className="p-6 bg-gray-100 min-h-screen">
-// // // //       {/* Header */}
-// // // //       <header className="mb-10 text-center">
-// // // //         <h1 className="text-3xl font-bold text-indigo-600">Welcome to UniGames</h1>
-// // // //         <p className="text-xl text-gray-700">Find your favorite games</p>
-// // // //         <input
-// // // //           type="text"
-// // // //           placeholder="Search games or categories..."
-// // // //           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-// // // //           value={searchTerm}
-// // // //           onChange={(e) => setSearchTerm(e.target.value)}
-// // // //         />
-// // // //       </header>
-
-// // // //       {/* Filters */}
-// // // //       <div className="flex justify-between mb-6">
-// // // //         <div className="flex gap-4">
-// // // //           <select
-// // // //             value={selectedCategory}
-// // // //             onChange={(e) => setSelectedCategory(e.target.value)}
-// // // //             className="p-3 border rounded-lg shadow-lg"
-// // // //           >
-// // // //             <option value="All">All Categories</option>
-// // // //             <option value="Action">Action</option>
-// // // //             <option value="Adventure">Adventure</option>
-// // // //             <option value="Horror">Horror</option>
-// // // //           </select>
-
-// // // //           <select
-// // // //             value={sortBy}
-// // // //             onChange={(e) => setSortBy(e.target.value)}
-// // // //             className="p-3 border rounded-lg shadow-lg"
-// // // //           >
-// // // //             <option value="priceAsc">Price: Low to High</option>
-// // // //             <option value="priceDesc">Price: High to Low</option>
-// // // //           </select>
-// // // //         </div>
-// // // //       </div>
-
-// // // //       {/* Game Cards */}
-// // // //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-// // // //         {sortedGames.map(game => (
-// // // //           <div
-// // // //             key={game.id}
-// // // //             className="border rounded-lg overflow-hidden shadow-xl transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl"
-// // // //           >
-// // // //             <img
-// // // //               src={game.image}
-// // // //               alt={game.title}
-// // // //               className="w-full h-64 object-cover transition-transform duration-300 ease-in-out hover:scale-110"
-// // // //               onClick={() => handleGameClick(game)}
-// // // //             />
-// // // //             <div className="p-4">
-// // // //               <h3 className="text-xl font-semibold mb-2">{game.title}</h3>
-// // // //               <p className="text-gray-600 mb-2">{game.category}</p>
-// // // //               <p className="text-gray-700 text-lg mb-4">$ {game.price}</p>
-// // // //               <button
-// // // //                 onClick={() => handleAddToCart(game)}
-// // // //                 className="w-full bg-indigo-600 text-white py-2 rounded-lg transition-transform duration-300 ease-in-out hover:bg-indigo-700 hover:scale-105"
-// // // //               >
-// // // //                 Add to Cart
-// // // //               </button>
-// // // //             </div>
-// // // //           </div>
-// // // //         ))}
-// // // //       </div>
-
-// // // //       {/* Footer */}
-// // // //       <footer className="mt-12 text-center text-gray-600">
-// // // //         <p>&copy; 2025 UniGames. All rights reserved.</p>
-// // // //       </footer>
-// // // //     </div>
-// // // //   );
-// // // // }
-
-// // // // import { useState } from 'react';
-// // // // import { useCart } from '../context/CartContext';
-// // // // import toast from 'react-hot-toast';
-// // // // import { motion } from 'framer-motion';
-
-// // // // const GAMES = [
-// // // //   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// // // //   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// // // //   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' }
-// // // // ];
-
-// // // // export default function Home() {
-// // // //   const { addToCart } = useCart();
-// // // //   const [searchTerm, setSearchTerm] = useState('');
-// // // //   const [selectedCategory, setSelectedCategory] = useState('All');
-// // // //   const [sortBy, setSortBy] = useState('priceAsc');
-
-// // // //   // Get unique categories
-// // // //   const categories = ['All', ...new Set(GAMES.map(game => game.category))];
-
-// // // //   // Filter games based on search and category
-// // // //   const filteredGames = GAMES.filter(game =>
-// // // //     (game.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-// // // //      game.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
-// // // //     (selectedCategory === 'All' || game.category === selectedCategory)
-// // // //   );
-
-// // // //   // Sort games based on price
-// // // //   const sortedGames = [...filteredGames].sort((a, b) => {
-// // // //     if (sortBy === 'priceAsc') return a.price - b.price;
-// // // //     if (sortBy === 'priceDesc') return b.price - a.price;
-// // // //     return 0;
-// // // //   });
-
-// // // //   const handleAddToCart = (game) => {
-// // // //     addToCart(game);
-// // // //     toast.success(`${game.title} added to cart!`);
-// // // //   };
-
-// // // //   return (
-// // // //     <div className="p-6 bg-gray-100 min-h-screen">
-// // // //       <header className="mb-10 text-center">
-// // // //         <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-// // // //         <input
-// // // //           type="text"
-// // // //           placeholder="Search games or categories..."
-// // // //           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-// // // //           value={searchTerm}
-// // // //           onChange={(e) => setSearchTerm(e.target.value)}
-// // // //         />
-// // // //       </header>
-
-// // // //       {/* Filters */}
-// // // //       <div className="flex justify-between mb-6">
-// // // //         <select
-// // // //           value={selectedCategory}
-// // // //           onChange={(e) => setSelectedCategory(e.target.value)}
-// // // //           className="p-3 border rounded-lg shadow-lg"
-// // // //         >
-// // // //           {categories.map(cat => (
-// // // //             <option key={cat} value={cat}>{cat}</option>
-// // // //           ))}
-// // // //         </select>
-
-// // // //         <select
-// // // //           value={sortBy}
-// // // //           onChange={(e) => setSortBy(e.target.value)}
-// // // //           className="p-3 border rounded-lg shadow-lg"
-// // // //         >
-// // // //           <option value="priceAsc">Price: Low to High</option>
-// // // //           <option value="priceDesc">Price: High to Low</option>
-// // // //         </select>
-// // // //       </div>
-
-// // // //       {/* Game Cards */}
-// // // //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-// // // //         {sortedGames.length > 0 ? (
-// // // //           sortedGames.map(game => (
-// // // //             <motion.div
-// // // //               key={game.id}
-// // // //               className="border rounded-lg overflow-hidden shadow-xl bg-white"
-// // // //               whileHover={{ scale: 1.05 }}
-// // // //             >
-// // // //               <img
-// // // //                 src={game.image}
-// // // //                 alt={game.title}
-// // // //                 className="w-full h-64 object-cover"
-// // // //                 loading="lazy"
-// // // //               />
-// // // //               <div className="p-4">
-// // // //                 <h3 className="text-xl font-semibold mb-2">{game.title}</h3>
-// // // //                 <p className="text-gray-600">{game.category}</p>
-// // // //                 <p className="text-gray-700 text-lg mb-4">$ {game.price}</p>
-// // // //                 <button
-// // // //                   onClick={() => handleAddToCart(game)}
-// // // //                   className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700"
-// // // //                 >
-// // // //                   Add to Cart
-// // // //                 </button>
-// // // //               </div>
-// // // //             </motion.div>
-// // // //           ))
-// // // //         ) : (
-// // // //           <div className="col-span-3 text-center text-gray-500">
-// // // //             <p>No games found. Try a different search or category.</p>
-// // // //           </div>
-// // // //         )}
-// // // //       </div>
-
-// // // //       <footer className="mt-12 text-center text-gray-600">
-// // // //         <p>&copy; 2025 UniGames. All rights reserved.</p>
-// // // //       </footer>
-// // // //     </div>
-// // // //   );
-// // // // }
-
-// // // import { useState } from 'react';
-// // // import { useCart } from '../context/CartContext';
-// // // import toast from 'react-hot-toast';
-// // // import { motion } from 'framer-motion';
-// // // import { Link } from 'react-router-dom';
-
-// // // const GAMES = [
-// // //   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// // //   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// // //   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' }
-// // // ];
-
-// // // export default function Home() {
-// // //   const { addToCart } = useCart();
-// // //   const [searchTerm, setSearchTerm] = useState('');
-// // //   const [selectedCategory, setSelectedCategory] = useState('All');
-// // //   const [sortBy, setSortBy] = useState('priceAsc');
-// // //   const [darkMode, setDarkMode] = useState(false);
-
-// // //   const categories = ['All', ...new Set(GAMES.map(game => game.category))];
-
-// // //   const filteredGames = GAMES.filter(game =>
-// // //     (game.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-// // //      game.category.toLowerCase().includes(searchTerm.toLowerCase())) &&
-// // //     (selectedCategory === 'All' || game.category === selectedCategory)
-// // //   );
-
-// // //   const sortedGames = [...filteredGames].sort((a, b) => {
-// // //     if (sortBy === 'priceAsc') return a.price - b.price;
-// // //     if (sortBy === 'priceDesc') return b.price - a.price;
-// // //     return 0;
-// // //   });
-
-// // //   const handleAddToCart = (game) => {
-// // //     addToCart(game);
-// // //     toast.success(`${game.title} added to cart!`);
-// // //   };
-
-// // //   return (
-// // //     <div className={darkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-black'}>
-// // //       <header className="flex justify-between items-center p-4 shadow-lg">
-// // //         <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-// // //         <div>
-// // //           <button
-// // //             onClick={() => setDarkMode(!darkMode)}
-// // //             className="bg-gray-800 text-white px-4 py-2 rounded-lg"
-// // //           >
-// // //             {darkMode ? 'Light Mode' : 'Dark Mode'}
-// // //           </button>
-// // //           <Link to="/cart" className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-// // //             Go to Cart
-// // //           </Link>
-// // //         </div>
-// // //       </header>
-
-// // //       <div className="p-6">
-// // //         <input
-// // //           type="text"
-// // //           placeholder="Search games or categories..."
-// // //           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-// // //           value={searchTerm}
-// // //           onChange={(e) => setSearchTerm(e.target.value)}
-// // //         />
-
-// // //         <div className="flex justify-between my-4">
-// // //           <select
-// // //             value={selectedCategory}
-// // //             onChange={(e) => setSelectedCategory(e.target.value)}
-// // //             className="p-3 border rounded-lg shadow-lg"
-// // //           >
-// // //             {categories.map(cat => (
-// // //               <option key={cat} value={cat}>{cat}</option>
-// // //             ))}
-// // //           </select>
-
-// // //           <select
-// // //             value={sortBy}
-// // //             onChange={(e) => setSortBy(e.target.value)}
-// // //             className="p-3 border rounded-lg shadow-lg"
-// // //           >
-// // //             <option value="priceAsc">Price: Low to High</option>
-// // //             <option value="priceDesc">Price: High to Low</option>
-// // //           </select>
-// // //         </div>
-
-// // //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-// // //           {sortedGames.map(game => (
-// // //             <motion.div
-// // //               key={game.id}
-// // //               className="border rounded-lg overflow-hidden shadow-xl bg-white"
-// // //               whileHover={{ scale: 1.05 }}
-// // //             >
-// // //               <img
-// // //                 src={game.image}
-// // //                 alt={game.title}
-// // //                 className="w-full h-64 object-cover"
-// // //               />
-// // //               <div className="p-4">
-// // //                 <h3 className="text-xl font-semibold">{game.title}</h3>
-// // //                 <p className="text-gray-600">{game.category}</p>
-// // //                 <p className="text-gray-700">$ {game.price}</p>
-// // //                 <button
-// // //                   onClick={() => handleAddToCart(game)}
-// // //                   className="bg-indigo-600 text-white py-2 mt-4 w-full rounded-lg"
-// // //                 >
-// // //                   Add to Cart
-// // //                 </button>
-// // //               </div>
-// // //             </motion.div>
-// // //           ))}
-// // //         </div>
-// // //       </div>
-
-// // //       <footer className="text-center py-4">
-// // //         <p>&copy; 2025 UniGames. All rights reserved.</p>
-// // //       </footer>
-// // //     </div>
-// // //   );
-// // // }
-
-// // import { useState } from 'react';
-// // import { useCart } from '../context/CartContext';
-// // import toast from 'react-hot-toast';
-// // import { motion } from 'framer-motion';
-// // import { Link } from 'react-router-dom';
-
-// // const GAMES = [
-// //   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// //   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// //   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' },
-// //   { id: 4, title: 'THE LAST OF US', price: 44.99, category: 'Horror', image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-// //   { id: 5, title: 'GOD OF WAR', price: 44.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-// //   { id: 6, title: 'HORIZON', price: 44.99, category: 'Adventure', image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-// //   { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-// //   { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-// //   { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-// //   { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-// //   { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-// //   { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-// //   { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-// //   { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-// //   { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-// //   { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-// //   { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg' },
-// //   { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg' },
-// //   { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-// //   { id: 20, title: 'Froza Horizon 5', price: 44.99, image: 'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg' }
-// // ];
-
-// // export default function Home() {
-// //   const { addToCart } = useCart();
-// //   const [searchTerm, setSearchTerm] = useState('');
-// //   const [selectedCategory, setSelectedCategory] = useState('All');
-// //   const [sortBy, setSortBy] = useState('priceAsc');
-
-// //   const categories = ['All', ...new Set(GAMES.map(game => game.category))];
-
-// //   const sortedGames = [...filteredGames].sort((a, b) => {
-// //     if (sortBy === 'priceAsc') return a.price - b.price;
-// //     if (sortBy === 'priceDesc') return b.price - a.price;
-// //     return 0;
-// //   });
-
-// //   const handleAddToCart = (game) => {
-// //     addToCart(game);
-// //     toast.success(`${game.title} added to cart!`);
-// //   };
-
-// //   return (
-// //     <div className="bg-gray-100 text-black">
-// //       <header className="flex justify-between items-center p-4 shadow-lg">
-// //         <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-// //         <Link to="/cart" className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-// //           Go to Cart
-// //         </Link>
-// //       </header>
-
-// //       <div className="p-6">
-// //         <input
-// //           type="text"
-// //           placeholder="Search games or categories..."
-// //           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-// //           value={searchTerm}
-// //           onChange={(e) => setSearchTerm(e.target.value)}
-// //         />
-
-// //         <div className="flex justify-between my-4">
-// //           <select
-// //             value={selectedCategory}
-// //             onChange={(e) => setSelectedCategory(e.target.value)}
-// //             className="p-3 border rounded-lg shadow-lg"
-// //           >
-// //             {categories.map(cat => (
-// //               <option key={cat} value={cat}>{cat}</option>
-// //             ))}
-// //           </select>
-
-// //           <select
-// //             value={sortBy}
-// //             onChange={(e) => setSortBy(e.target.value)}
-// //             className="p-3 border rounded-lg shadow-lg"
-// //           >
-// //             <option value="priceAsc">Price: Low to High</option>
-// //             <option value="priceDesc">Price: High to Low</option>
-// //           </select>
-// //         </div>
-
-// //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-// //           {sortedGames.map(game => (
-// //             <motion.div
-// //               key={game.id}
-// //               className="border rounded-lg overflow-hidden shadow-xl bg-white"
-// //               whileHover={{ scale: 1.05 }}
-// //             >
-// //               <img
-// //                 src={game.image}
-// //                 alt={game.title}
-// //                 className="w-full h-64 object-cover"
-// //               />
-// //               <div className="p-4">
-// //                 <h3 className="text-xl font-semibold">{game.title}</h3>
-// //                 <p className="text-gray-600">{game.category}</p>
-// //                 <p className="text-gray-700">$ {game.price}</p>
-// //                 <button
-// //                   onClick={() => handleAddToCart(game)}
-// //                   className="bg-indigo-600 text-white py-2 mt-4 w-full rounded-lg"
-// //                 >
-// //                   Add to Cart
-// //                 </button>
-// //               </div>
-// //             </motion.div>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <footer className="text-center py-4">
-// //         <p>&copy; 2025 UniGames. All rights reserved.</p>
-// //       </footer>
-// //     </div>
-// //   );
-// // }
-
-// // import { useState } from 'react';
-// // import { useCart } from '../context/CartContext';
-// // import toast from 'react-hot-toast';
-// // import { motion } from 'framer-motion';
-// // import { Link } from 'react-router-dom';
-
-// // const GAMES = [
-// //   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-// //   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-// //   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' },
-// //   { id: 4, title: 'THE LAST OF US', price: 44.99, category: 'Horror', image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-// //   { id: 5, title: 'GOD OF WAR', price: 44.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-// //     { id: 6, title: 'HORIZON', price: 44.99, category: 'Adventure', image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-// //     { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-// //     { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-// //     { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-// //     { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-// //     { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-// //     { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-// //     { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-// //     { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-// //     { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-// //     { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-// //     { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg' },
-// //     { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg' },
-// //     { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-// //     { id: 20, title: 'Froza Horizon 5', price: 44.99, image: 'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg' }
-  
-// // ];
-
-// // export default function Home() {
-// //   const { addToCart } = useCart();
-// //   const [searchTerm, setSearchTerm] = useState('');
-// //   const [selectedCategory, setSelectedCategory] = useState('All');
-// //   const [sortBy, setSortBy] = useState('priceAsc');
-
-// //   const categories = ['All', ...new Set(GAMES.map(game => game.category).filter(Boolean))];
-
-// //   // ✅ Fixed Search Logic to Prevent Blank Page
-// //   const filteredGames = GAMES.filter(game =>
-// //     game.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-// //     (selectedCategory === 'All' || game.category === selectedCategory)
-// //   );
-
-// //   const sortedGames = [...filteredGames].sort((a, b) => {
-// //     if (sortBy === 'priceAsc') return a.price - b.price;
-// //     if (sortBy === 'priceDesc') return b.price - a.price;
-// //     return 0;
-// //   });
-
-// //   const handleAddToCart = (game) => {
-// //     addToCart(game);
-// //     toast.success(`${game.title} added to cart!`);
-// //   };
-
-// //   return (
-// //     <div className="bg-gray-100 text-black">
-// //       <header className="flex justify-between items-center p-4 shadow-lg">
-// //         <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-// //         <Link to="/cart" className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-// //           Go to Cart
-// //         </Link>
-// //       </header>
-
-// //       <div className="p-6">
-// //         {/* ✅ Search Bar */}
-// //         <input
-// //           type="text"
-// //           placeholder="Search games..."
-// //           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-// //           value={searchTerm}
-// //           onChange={(e) => setSearchTerm(e.target.value)}
-// //         />
-
-// //         <div className="flex justify-between my-4">
-// //           <select
-// //             value={selectedCategory}
-// //             onChange={(e) => setSelectedCategory(e.target.value)}
-// //             className="p-3 border rounded-lg shadow-lg"
-// //           >
-// //             {categories.map(cat => (
-// //               <option key={cat} value={cat}>{cat}</option>
-// //             ))}
-// //           </select>
-
-// //           <select
-// //             value={sortBy}
-// //             onChange={(e) => setSortBy(e.target.value)}
-// //             className="p-3 border rounded-lg shadow-lg"
-// //           >
-// //             <option value="priceAsc">Price: Low to High</option>
-// //             <option value="priceDesc">Price: High to Low</option>
-// //           </select>
-// //         </div>
-
-// //         {/* ✅ Render Games */}
-// //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-// //           {sortedGames.map(game => (
-// //             <motion.div
-// //               key={game.id}
-// //               className="border rounded-lg overflow-hidden shadow-xl bg-white"
-// //               whileHover={{ scale: 1.05 }}
-// //             >
-// //               <img
-// //                 src={game.image}
-// //                 alt={game.title}
-// //                 className="w-full h-64 object-cover"
-// //               />
-// //               <div className="p-4">
-// //                 <h3 className="text-xl font-semibold">{game.title}</h3>
-// //                 <p className="text-gray-600">{game.category}</p>
-// //                 <p className="text-gray-700">$ {game.price}</p>
-// //                 <button
-// //                   onClick={() => handleAddToCart(game)}
-// //                   className="bg-indigo-600 text-white py-2 mt-4 w-full rounded-lg"
-// //                 >
-// //                   Add to Cart
-// //                 </button>
-// //               </div>
-// //             </motion.div>
-// //           ))}
-// //         </div>
-// //       </div>
-
-// //       <footer className="text-center py-4">
-// //         <p>&copy; 2025 UniGames. All rights reserved.</p>
-// //       </footer>
-// //     </div>
-// //   );
-// // }
-
-// import { useState } from 'react';
-// import { useCart } from '../context/CartContext';
-// import toast from 'react-hot-toast';
-// import { motion } from 'framer-motion';
-// import { Link } from 'react-router-dom';
-
-// const GAMES = [
-//   { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', rating: 4.5, image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-//   { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', rating: 4.8, image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-//   { id: 3, title: 'SPIDER MAN', price: 39.99, category: 'Action', rating: 4.2, image: 'https://rukminim2.flixcart.com/image/750/900/kb89ea80/physical-game/6/3/z/spider-man-game-spider-man-shatterd-dimensions-action-adventure-original-imafsmsyrvnjadku.jpeg?q=20&crop=false' },
-//   { id: 4, title: 'THE LAST OF US', price: 44.99, category: 'Horror', image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-//   { id: 5, title: 'GOD OF WAR', price: 44.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-//     { id: 6, title: 'HORIZON', price: 44.99, category: 'Adventure', image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-//     { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-//     { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-//     { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-//     { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-//     { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-//     { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-//     { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-//     { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-//     { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-//     { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-//     { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg' },
-//     { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg' },
-//     { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-//     { id: 20, title: 'Froza Horizon 5', price: 44.99, image: 'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg' }
-  
-
-// ];
-
-// export default function Home() {
-//   const { addToCart } = useCart();
-//   const [searchTerm, setSearchTerm] = useState('');
-//   const [selectedCategory, setSelectedCategory] = useState('All');
-//   const [sortBy, setSortBy] = useState('priceAsc');
-//   const [wishlist, setWishlist] = useState([]);
-
-//   const categories = ['All', ...new Set(GAMES.map(game => game.category).filter(Boolean))];
-
-//   const filteredGames = GAMES.filter(game =>
-//     game.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-//     (selectedCategory === 'All' || game.category === selectedCategory)
-//   );
-
-//   const sortedGames = [...filteredGames].sort((a, b) => {
-//     if (sortBy === 'priceAsc') return a.price - b.price;
-//     if (sortBy === 'priceDesc') return b.price - a.price;
-//     if (sortBy === 'rating') return b.rating - a.rating;
-//     return 0;
-//   });
-
-//   const handleAddToCart = (game) => {
-//     addToCart(game);
-//     toast.success(`${game.title} added to cart!`);
-//   };
-
-//   const handleAddToWishlist = (game) => {
-//     if (!wishlist.includes(game)) {
-//       setWishlist([...wishlist, game]);
-//       toast.success(`${game.title} added to wishlist!`);
-//     }
-//   };
-
-//   return (
-//     <div className="bg-gray-100 text-black">
-//       <header className="flex justify-between items-center p-4 shadow-lg">
-//         <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-//         <Link to="/cart" className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-//           Go to Cart
-//         </Link>
-//       </header>
-
-//       <div className="p-6">
-//         <input
-//           type="text"
-//           placeholder="Search games..."
-//           className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-//           value={searchTerm}
-//           onChange={(e) => setSearchTerm(e.target.value)}
-//         />
-
-//         <div className="flex justify-between my-4">
-//           <select
-//             value={selectedCategory}
-//             onChange={(e) => setSelectedCategory(e.target.value)}
-//             className="p-3 border rounded-lg shadow-lg"
-//           >
-//             {categories.map(cat => (
-//               <option key={cat} value={cat}>{cat}</option>
-//             ))}
-//           </select>
-
-//           <select
-//             value={sortBy}
-//             onChange={(e) => setSortBy(e.target.value)}
-//             className="p-3 border rounded-lg shadow-lg"
-//           >
-//             <option value="priceAsc">Price: Low to High</option>
-//             <option value="priceDesc">Price: High to Low</option>
-//             <option value="rating">Rating: High to Low</option>
-//           </select>
-//         </div>
-
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-//           {sortedGames.map(game => (
-//             <motion.div
-//               key={game.id}
-//               className="border rounded-lg overflow-hidden shadow-xl bg-white"
-//               whileHover={{ scale: 1.05 }}
-//             >
-//               <img
-//                 src={game.image}
-//                 alt={game.title}
-//                 className="w-full h-64 object-cover"
-//               />
-//               <div className="p-4">
-//                 <h3 className="text-xl font-semibold">{game.title}</h3>
-//                 <p className="text-gray-600">{game.category}</p>
-//                 <p className="text-gray-700">$ {game.price}</p>
-//                 <p className="text-yellow-500">⭐ {game.rating}</p>
-//                 <button
-//                   onClick={() => handleAddToCart(game)}
-//                   className="bg-indigo-600 text-white py-2 mt-4 w-full rounded-lg"
-//                 >
-//                   Add to Cart
-//                 </button>
-//                 <button
-//                   onClick={() => handleAddToWishlist(game)}
-//                   className="bg-pink-600 text-white py-2 mt-2 w-full rounded-lg"
-//                 >
-//                   Add to Wishlist
-//                 </button>
-//               </div>
-//             </motion.div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
 import { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import Lottie from 'lottie-react';
-import successAnimation from '../assets/success.json';
 import loaderAnimation from '../assets/loader.json';
 
-
-const GAMES = [
-  { id: 1, title: 'MINECRAFT', price: 59.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71Wz+sDS-AL.AC_UF894,1000_QL80.jpg' },
-  { id: 2, title: 'GTA V', price: 49.99, category: 'Adventure', image: 'https://rukminim2.flixcart.com/image/850/1000/kz4gh3k0/poster/g/9/s/medium-gta-v-video-game-matte-finish-poster-posterpoint6139-original-imagb785ygpv6sbb.jpeg?q=90&crop=false' },
-  { id: 4, title: 'THE LAST OF US', price: 44.99, category: 'Horror', image: 'https://rockvillerampage.com/wp-content/uploads/2023/03/The-Last-of-Us-Graphic_Picture.jpg' },
-    { id: 5, title: 'GOD OF WAR', price: 44.99, category: 'Action', image: 'https://m.media-amazon.com/images/I/71rONQfsVnL.AC_UF1000,1000_QL80.jpg' },
-      { id: 6, title: 'HORIZON', price: 44.99, category: 'Adventure', image: 'https://m.media-amazon.com/images/I/71NCZD+7EHL.AC_UF894,1000_QL80.jpg' },
-      { id: 7, title: 'THE PATHLESS', price: 44.99, image: 'https://i.ytimg.com/vi/p8roBoKS98M/sddefault.jpg' },
-      { id: 8, title: 'UNCHARTED', price: 44.99, image: 'https://images.gog-statics.com/294b4e04dc1be317d3f7ad22712097340e25a4ab6fc69c93b267b8676c3f72d6.jpg' },
-      { id: 9, title: 'FC25', price: 44.99, image: 'https://assets.goal.com/images/v3/blt9cfd4b53d0d66186/GOAL%20-%20Multiple%20Images%20-%203%20Stacked%20-%20Facebook%20(92).jpg?auto=webp&format=pjpg&width=3840&quality=60' },
-      { id: 10, title: 'ALAN WAKE II', price: 44.99, image: 'https://i.ytimg.com/vi/Zv4g044SP7s/maxresdefault.jpg' },
-      { id: 11, title: 'ASSASSINS OF SHADOW', price: 44.99, image: 'https://i.ytimg.com/vi/hB6obB-aZzY/maxresdefault.jpg' },
-      { id: 12, title: 'SPACE MARINE', price: 44.99, image: 'https://i.ytimg.com/vi/buHTy_FAxIo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDnlbNNQDGqBATatxXBPr7CD2Naqw' },
-      { id: 13, title: '2K25', price: 44.99, image: 'https://149367133.v2.pressablecdn.com/wp-content/uploads/2024/08/nba-2k25-gameplay-improvements-courtside-report-defense-system-proplay-20240802-gadgetmatch.jpg' },
-      { id: 14, title: 'BANISHERS', price: 44.99, image: 'https://i.ytimg.com/vi/IaB0MyubRg0/maxresdefault.jpg' },
-      { id: 15, title: 'DARGON QUEST III', price: 44.99, image: 'https://static0.gamerantimages.com/wordpress/wp-content/uploads/2024/06/new-dragon-quest-remakes-announced-4-1-2.jpg' },
-      { id: 16, title: 'PERSONA 5 TACTICA', price: 44.99, image: 'https://target.scene7.com/is/image/Target/GUEST_ef381e93-80a9-4a87-9fd9-6e22fdca4923?wid=488&hei=488&fmt=pjpeg' },
-      { id: 17, title: 'Red Dead Redemption 2', price: 59.99, image: 'https://c4.wallpaperflare.com/wallpaper/740/918/401/digital-art-artwork-red-dead-redemption-red-dead-redemption-2-arthur-morgan-hd-wallpaper-preview.jpg' },
-      { id: 18, title: 'Cyber Punk 2077', price: 59.99, image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Cyberpunk_2077_logo.svg' },
-      { id: 19, title: 'Valorant', price: 39.99, image: 'https://4kwallpapers.com/images/wallpapers/valorant-pc-games-2020-games-3840x1080-1267.jpg' },
-      { id: 20, title: 'Froza Horizon 5', price: 44.99, image: 'https://s1.cdn.autoevolution.com/images/news/forza-horizon-5-hot-wheels-review-pc-one-of-the-best-slices-of-forza-horizon-194339_1.jpg' }
-    
+const games = [
+  {
+    id: 1,
+    title: 'Red Dead Redemption 2',
+    price: 59.99,
+    image: 'https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'Action',
+    rating: 4.8,
+    description: 'An epic tale of life in America\'s unforgiving heartland.'
+  },
+  {
+    id: 2,
+    title: 'Cyberpunk 2077',
+    price: 49.99,
+    image: 'https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'RPG',
+    rating: 4.2,
+    description: 'An open-world, action-adventure story set in Night City.'
+  },
+  {
+    id: 3,
+    title: 'The Witcher 3',
+    price: 39.99,
+    image: 'https://images.pexels.com/photos/1174746/pexels-photo-1174746.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'RPG',
+    rating: 4.9,
+    description: 'A story-driven open world RPG set in a visually stunning fantasy universe.'
+  },
+  {
+    id: 4,
+    title: 'Call of Duty: Modern Warfare',
+    price: 69.99,
+    image: 'https://images.pexels.com/photos/3945313/pexels-photo-3945313.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'FPS',
+    rating: 4.5,
+    description: 'The stakes have never been higher as players take on the role of lethal Tier One operators.'
+  },
+  {
+    id: 5,
+    title: 'Minecraft',
+    price: 26.95,
+    image: 'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'Sandbox',
+    rating: 4.7,
+    description: 'A game about placing blocks and going on adventures.'
+  },
+  {
+    id: 6,
+    title: 'FIFA 24',
+    price: 59.99,
+    image: 'https://images.pexels.com/photos/274422/pexels-photo-274422.jpeg?auto=compress&cs=tinysrgb&w=500',
+    category: 'Sports',
+    rating: 4.3,
+    description: 'The world\'s game with HyperMotionV technology.'
+  }
 ];
 
 export default function Home() {
   const { addToCart } = useCart();
-  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [sortBy, setSortBy] = useState('priceAsc');
-  const [loading, setLoading] = useState(true);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [hoveredGame, setHoveredGame] = useState(null);
+
+  const categories = ['All', 'Action', 'RPG', 'FPS', 'Sandbox', 'Sports'];
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000); // Simulate loading time
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const categories = ['All', ...new Set(GAMES.map(game => game.category).filter(Boolean))];
-
-  const filteredGames = GAMES.filter(game =>
-    game.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-    (selectedCategory === 'All' || game.category === selectedCategory)
-  );
-
-  const sortedGames = [...filteredGames].sort((a, b) => {
-    if (sortBy === 'priceAsc') return a.price - b.price;
-    if (sortBy === 'priceDesc') return b.price - a.price;
-    return 0;
+  const filteredGames = games.filter(game => {
+    const matchesCategory = selectedCategory === 'All' || game.category === selectedCategory;
+    const matchesSearch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
   });
 
   const handleAddToCart = (game) => {
     addToCart(game);
-    setShowSuccess(true);
-    setTimeout(() => setShowSuccess(false), 2000);
+    toast.success(`${game.title} added to cart!`, {
+      icon: '🎮',
+      style: {
+        borderRadius: '10px',
+        background: '#333',
+        color: '#fff',
+      },
+    });
   };
 
-  if (loading) { 
+  if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <Lottie animationData={successAnimation} className="w-32" />
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-blue-500">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="text-center"
+        >
+          <Lottie animationData={loaderAnimation} className="w-32 h-32 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-white">Loading UniGames...</h2>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="bg-gray-100 text-black">
-      {showSuccess && (
-        <div className="fixed top-4 right-4">
-          <Lottie animationData={successAnimation} className="w-20" />
-        </div>
-      )}
-
-      <header className="flex justify-between items-center p-4 shadow-lg">
-        <h1 className="text-4xl font-bold text-indigo-600">UniGames</h1>
-        <Link to="/cart" className="ml-4 bg-indigo-600 text-white px-4 py-2 rounded-lg">
-          Go to Cart
-        </Link>
-      </header>
-
-      <div className="p-6">
-        <input
-          type="text"
-          placeholder="Search games..."
-          className="w-full p-3 mt-4 border-2 rounded-lg shadow-lg"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-
-        <div className="flex justify-between my-4">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="p-3 border rounded-lg shadow-lg"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50"
+    >
+      {/* Hero Section */}
+      <motion.div
+        initial={{ y: -50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        className="bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white py-20 px-4"
+      >
+        <div className="container mx-auto text-center">
+          <motion.h1
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="text-5xl font-extrabold mb-4 bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent"
           >
-            {categories.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
+            Welcome to UniGames
+          </motion.h1>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            className="text-xl mb-8 text-gray-200"
+          >
+            Discover the best games at unbeatable prices
+          </motion.p>
+          
+          {/* Search Bar */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.8 }}
+            className="max-w-md mx-auto"
+          >
+            <input
+              type="text"
+              placeholder="Search for games..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-6 py-3 rounded-full text-gray-800 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-all duration-300"
+            />
+          </motion.div>
+        </div>
+      </motion.div>
+
+      <div className="container mx-auto px-4 py-12">
+        {/* Category Filter */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-8"
+        >
+          <h3 className="text-2xl font-bold mb-4 text-gray-800">Browse by Category</h3>
+          <div className="flex flex-wrap gap-3">
+            {categories.map((category) => (
+              <motion.button
+                key={category}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:bg-gray-100 shadow-md'
+                }`}
+              >
+                {category}
+              </motion.button>
             ))}
-          </select>
+          </div>
+        </motion.div>
 
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="p-3 border rounded-lg shadow-lg"
-          >
-            <option value="priceAsc">Price: Low to High</option>
-            <option value="priceDesc">Price: High to Low</option>
-          </select>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sortedGames.map(game => (
+        {/* Games Grid */}
+        <motion.div
+          initial={{ y: 50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+        >
+          <h3 className="text-2xl font-bold mb-6 text-gray-800">
+            {selectedCategory === 'All' ? 'All Games' : `${selectedCategory} Games`}
+            <span className="text-sm font-normal text-gray-500 ml-2">
+              ({filteredGames.length} games)
+            </span>
+          </h3>
+          
+          <AnimatePresence mode="wait">
             <motion.div
-              key={game.id}
-              className="border rounded-lg overflow-hidden shadow-xl bg-white relative"
-              whileHover={{ scale: 1.05 }}
+              key={selectedCategory + searchTerm}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
-              <img
-                src={game.image}
-                alt={game.title}
-                className="w-full h-64 object-cover"
-              />
-              <div className="absolute top-2 right-2">
-                <Lottie animationData={loaderAnimation} className="w-12" />
-              </div>
-
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{game.title}</h3>
-                <p className="text-gray-600">{game.category}</p>
-                <p className="text-gray-700">$ {game.price}</p>
-                <button
-                  onClick={() => handleAddToCart(game)}
-                  className="bg-indigo-600 text-white py-2 mt-4 w-full rounded-lg"
+              {filteredGames.map((game, index) => (
+                <motion.div
+                  key={game.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  onHoverStart={() => setHoveredGame(game.id)}
+                  onHoverEnd={() => setHoveredGame(null)}
+                  className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
                 >
-                  Add to Cart
-                </button>
-              </div>
+                  <div className="relative overflow-hidden">
+                    <motion.img
+                      src={game.image}
+                      alt={game.title}
+                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                      whileHover={{ scale: 1.1 }}
+                    />
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: hoveredGame === game.id ? 1 : 0 }}
+                      className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                    >
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => handleAddToCart(game)}
+                        className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+                      >
+                        🛒 Quick Add
+                      </motion.button>
+                    </motion.div>
+                    
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                        {game.category}
+                      </span>
+                    </div>
+                    
+                    {/* Rating Badge */}
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-yellow-400 text-gray-800 px-2 py-1 rounded-full text-sm font-bold">
+                        ⭐ {game.rating}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold mb-2 text-gray-800 group-hover:text-purple-600 transition-colors duration-300">
+                      {game.title}
+                    </h3>
+                    <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                      {game.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-green-600">
+                        ${game.price}
+                      </span>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => handleAddToCart(game)}
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full font-medium hover:shadow-lg transition-all duration-300"
+                      >
+                        Add to Cart
+                      </motion.button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
-          ))}
-        </div>
-      </div>
+          </AnimatePresence>
 
-      <footer className="text-center py-4">
-        <p>&copy; 2025 UniGames. All rights reserved.</p>
-      </footer>
-    </div>
+          {filteredGames.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center py-16"
+            >
+              <div className="text-6xl mb-4">🎮</div>
+              <h3 className="text-2xl font-bold text-gray-700 mb-2">No games found</h3>
+              <p className="text-gray-500">Try adjusting your search or category filter</p>
+            </motion.div>
+          )}
+        </motion.div>
+      </div>
+    </motion.div>
   );
 }

@@ -84,6 +84,8 @@
 
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import { motion } from 'framer-motion';
+import { FaTwitter, FaFacebook, FaInstagram, FaDiscord, FaEnvelope, FaHeart } from 'react-icons/fa';
 
 export default function Footer() {
   const form = useRef();
@@ -99,68 +101,173 @@ export default function Footer() {
       .sendForm('service_0rzwzh9', 'template_qryp45a', form.current, 'fch85Utvj-AOmQ3PN') // Correctly use your public key
       .then(
         () => {
-          alert('Thanks for subscribing! A welcome email has been sent to your address.');
+          toast.success('Thanks for subscribing! A welcome email has been sent to your address.');
           form.current.reset(); // Clear the form inputs
         },
         (error) => {
           console.error('Failed to send email:', error); // Log the error
-          alert('There was a problem with your subscription. Please try again.');
+          toast.error('There was a problem with your subscription. Please try again.');
         }
       );
   };
 
   return (
-    <footer className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white mt-auto">
+    <motion.footer 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 text-white mt-auto relative overflow-hidden"
+    >
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <motion.div
+          animate={{ 
+            x: [0, 100, 0],
+            y: [0, -50, 0],
+            rotate: [0, 180, 360]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-10 left-10 w-20 h-20 bg-yellow-400 rounded-full opacity-10"
+        />
+        <motion.div
+          animate={{ 
+            x: [0, -80, 0],
+            y: [0, 60, 0],
+            rotate: [0, -180, -360]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-10 right-10 w-16 h-16 bg-pink-400 rounded-full opacity-10"
+        />
+      </div>
+
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, staggerChildren: 0.2 }}
+        >
           {/* Newsletter Section */}
-          <div>
-            <h3 className="text-2xl font-semibold mb-4 text-gray-100">Subscribe to Our Newsletter</h3>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex items-center mb-4">
+              <FaEnvelope className="text-yellow-300 mr-3 text-xl" />
+              <h3 className="text-2xl font-semibold text-gray-100">Subscribe to Our Newsletter</h3>
+            </div>
             <form ref={form} onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <input
+              <motion.input
+                whileFocus={{ scale: 1.02 }}
                 type="email"
                 name="user_email"
                 placeholder="Enter your email"
-                className="px-6 py-3 rounded-lg text-gray-800 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="px-6 py-3 rounded-lg text-gray-800 shadow-lg focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-all duration-300"
                 required
               />
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="bg-blue-800 px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-800 px-6 py-3 rounded-lg hover:shadow-xl transition-all duration-300 font-semibold"
               >
                 Subscribe
-              </button>
+              </motion.button>
             </form>
-          </div>
+          </motion.div>
 
           {/* Quick Links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             <h3 className="text-2xl font-semibold mb-4 text-gray-100">Quick Links</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">About Us</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Terms of Service</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Contact Us</a></li>
+              <motion.li whileHover={{ x: 5 }}>
+                <a href="#" className="text-gray-300 hover:text-yellow-300 transition duration-300 flex items-center">
+                  <span className="mr-2">→</span> About Us
+                </a>
+              </motion.li>
+              <motion.li whileHover={{ x: 5 }}>
+                <a href="#" className="text-gray-300 hover:text-yellow-300 transition duration-300 flex items-center">
+                  <span className="mr-2">→</span> Privacy Policy
+                </a>
+              </motion.li>
+              <motion.li whileHover={{ x: 5 }}>
+                <a href="#" className="text-gray-300 hover:text-yellow-300 transition duration-300 flex items-center">
+                  <span className="mr-2">→</span> Terms of Service
+                </a>
+              </motion.li>
+              <motion.li whileHover={{ x: 5 }}>
+                <a href="#" className="text-gray-300 hover:text-yellow-300 transition duration-300 flex items-center">
+                  <span className="mr-2">→</span> Contact Us
+                </a>
+              </motion.li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Social Links */}
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
             <h3 className="text-2xl font-semibold mb-4 text-gray-100">Follow Us</h3>
             <div className="flex space-x-6">
-              <a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Twitter</a>
-              <a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Facebook</a>
-              <a href="https://www.instagram.com/uni__games/" className="text-gray-300 hover:text-blue-400 transition duration-200">Instagram</a>
-              <a href="#" className="text-gray-300 hover:text-blue-400 transition duration-200">Discord</a>
+              <motion.a 
+                href="#" 
+                whileHover={{ scale: 1.2, y: -3 }}
+                className="text-gray-300 hover:text-blue-400 transition duration-300"
+              >
+                <FaTwitter className="text-2xl" />
+              </motion.a>
+              <motion.a 
+                href="#" 
+                whileHover={{ scale: 1.2, y: -3 }}
+                className="text-gray-300 hover:text-blue-600 transition duration-300"
+              >
+                <FaFacebook className="text-2xl" />
+              </motion.a>
+              <motion.a 
+                href="https://www.instagram.com/uni__games/" 
+                whileHover={{ scale: 1.2, y: -3 }}
+                className="text-gray-300 hover:text-pink-400 transition duration-300"
+              >
+                <FaInstagram className="text-2xl" />
+              </motion.a>
+              <motion.a 
+                href="#" 
+                whileHover={{ scale: 1.2, y: -3 }}
+                className="text-gray-300 hover:text-purple-400 transition duration-300"
+              >
+                <FaDiscord className="text-2xl" />
+              </motion.a>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-700 mt-8 pt-6 text-center">
-          <p className="text-gray-200 text-sm">© {new Date().getFullYear()} UniGames. All rights reserved.</p>
-        </div>
+        <motion.div 
+          className="border-t border-gray-700 mt-8 pt-6 text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+        >
+          <p className="text-gray-200 text-sm flex items-center justify-center">
+            © {new Date().getFullYear()} UniGames. Made with 
+            <motion.span
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 1, repeat: Infinity }}
+              className="mx-1"
+            >
+              <FaHeart className="text-red-400" />
+            </motion.span>
+            All rights reserved.
+          </p>
+        </motion.div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }
