@@ -85,6 +85,8 @@ export default function Home() {
 
   const handleAddToCart = (game) => {
     addToCart(game);
+    // Also add to last viewed when adding to cart
+    addToLastViewed(game);
     toast.success(`${game.title} added to cart!`, {
       icon: '🎮',
       style: {
@@ -93,6 +95,10 @@ export default function Home() {
         color: '#fff',
       },
     });
+  };
+
+  const handleGameClick = (game) => {
+    addToLastViewed(game);
   };
 
   if (isLoading) {
@@ -220,6 +226,7 @@ export default function Home() {
                   whileHover={{ y: -10 }}
                   onHoverStart={() => setHoveredGame(game.id)}
                   onHoverEnd={() => setHoveredGame(null)}
+                  onClick={() => handleGameClick(game)}
                   className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group"
                 >
                   <div className="relative overflow-hidden">

@@ -84,6 +84,7 @@
 
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import { FaTwitter, FaFacebook, FaInstagram, FaDiscord, FaEnvelope, FaHeart } from 'react-icons/fa';
 
